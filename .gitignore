@@ -1,0 +1,27 @@
+# Dependencies
+/vendor/
+/composer.lock
+
+# Logs
+*.log
+logs/
+
+# Cache
+/cache/
+*.tmp
+
+# environment variables
+.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# temporary files
+/tmp/
