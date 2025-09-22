@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "title": "Getting Started with React",
+    "description": "A beginner's guide to understanding React fundamentals, components, and state management for modern web development."
+  },
+  {
+    "id": 2,
+    "title": "The Future of Artificial Intelligence",
+    "description": "Exploring the latest advancements in AI technology and its potential impact on various industries in the coming years."
+  },
+  {
+    "id": 3,
+    "title": "Healthy Cooking for Busy Professionals",
+    "description": "Quick and nutritious recipes that can be prepared in under 30 minutes for those with demanding work schedules."
+  },
+  {
+    "id": 4,
+    "title": "Sustainable Travel Practices",
+    "description": "How to reduce your environmental footprint while exploring the world through eco-friendly travel tips and destinations."
+  },
+  {
+    "id": 5,
+    "title": "Mastering Python for Data Science",
+    "description": "Essential Python libraries and techniques for data analysis, visualization, and machine learning applications."
+  }
+]

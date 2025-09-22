@@ -20,8 +20,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 #Set working directory
 WORKDIR /var/www/html
 
-# Copy application code
-COPY . .
+# Configure git to treat this directory as safe
+RUN git config --global --add safe.directory /var/www/html
+
+# Copy only composer files to leverage Docker cache
+COPY composer.json composer.lock ./
 
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader
+
+# Copy the rest of the application code
+COPY . .

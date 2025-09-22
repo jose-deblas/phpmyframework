@@ -1,25 +1,35 @@
-.PHONY: install start down build composer
+.PHONY: build down install shell start test up
+
+APP_NAME=app
+
+build:
+	docker-compose build
 
 install:
-	docker-compose build && docker-compose up -d && docker-compose run --rm php composer install
+	docker-compose build && docker-compose up -d
 	@echo "You can now access the application at http://localhost:8000"
 
 start:
 	docker-compose up -d
 	@echo "You can now access the application at http://localhost:8000"
 
+up:
+	docker-compose up -d
+
 down:
 	docker-compose down
 
-build:
-	docker-compose build
+# This is a common Makefile target for a web service
+shell:
+	docker-compose exec $(APP_NAME) bash
 
-composersuggest:
-	docker-compose run --rm php composer $(filter-out $@,$(MAKECMDGOALS))
+# Or for a different service, like a database
+# shell-db:
+#	docker-compose exec database sh
 
-composer:
-	docker-compose run --rm php composer $(filter-out $@,$(MAKECMDGOALS))
+# If you need to run it on a service that isn't currently running, use 'run'
+# shell-new:
+#	docker-compose run --rm web sh
 
-# This allows passing arguments to composer
-%:
-	@:
+test:
+	docker-compose exec $(APP_NAME) vendor/bin/phpunit tests/* --colors=always --testdox
