@@ -1,7 +1,9 @@
 app_index:
     path:     /
-    controller: App\UI\Controller\IndexController::execute
+    controller: App\UI\Controller\IndexController
+    method: execute
 
 app_show:
     path:     /show/{id}
-    controller: App\UI\Controller\PostController::execute
+    controller: App\UI\Controller\PostController
+    method: execute

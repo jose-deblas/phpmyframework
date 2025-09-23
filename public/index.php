@@ -13,7 +13,6 @@ $response = $kernel->handle($request);
 
 $response->send();
 
-//prettyVarDump($_SERVER);
 prettyVarDump($_GET);
 
 function prettyVarDump($data) {

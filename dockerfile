@@ -8,11 +8,14 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
 #Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd zip pdo pdo_mysql
+    && docker-php-ext-install -j$(nproc) gd zip pdo pdo_mysql \
+    && pecl install yaml \
+    && docker-php-ext-enable yaml
 
 #Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
