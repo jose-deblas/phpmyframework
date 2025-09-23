@@ -4,11 +4,14 @@ namespace Framework;
 
 use Framework\Http\Request;
 use Framework\Http\Response;
+use Framework\Routing\Router;
 
 class Kernel
 {
     private string $environment;
     private bool $debug;
+    private bool $booted = false;
+    private Router $router;
 
     public function __construct(string $environment = 'dev', bool $debug = true)
     {
@@ -26,15 +29,40 @@ class Kernel
         return $this->debug;
     }
 
-    public static function handle(Request $request): Response
+    public function handle(Request $request): Response
     {
-        $uri = $request->getUrlPath();
-        if ('/' === $uri) {
-            $body = '<html><body><h1>Home Page</h1></body></html>';
-            return new Response($body);
-        } else {
-            $body = '<html><body><h1>Page Not Found papi</h1></body></html>';
-            return new Response($body, 404);
+        $this->boot();
+
+        [$controllerClass, $method] = $this->router->match($request->getUrlPath());
+        
+        if (null === $controllerClass || null === $method) {
+            return $this->notFoundResponse();
         }
+
+        $controller = new $controllerClass();
+
+        return $controller->$method($request);        
+    }
+
+    private function boot(): void
+    {
+        if ($this->booted) {
+            return;
+        }
+
+        $this->initializeRoutes();
+        
+        $this->booted = true;
+    }
+
+    private function initializeRoutes(): void
+    {
+        $this->router = Router::fromYamlConfig();
+    }
+
+    private function notFoundResponse(): Response
+    {
+        $body = '<html><body><h1>404 Not Found</h1></body></html>';
+        return new Response($body, 404);
     }
 }
