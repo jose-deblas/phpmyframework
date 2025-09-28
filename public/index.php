@@ -13,7 +13,7 @@ $response = $kernel->handle($request);
 
 $response->send();
 
-prettyVarDump($_GET);
+prettyVarDump($request);
 
 function prettyVarDump($data) {
     echo '<pre style="

@@ -35,8 +35,6 @@ class Kernel
     {
         $this->boot();
 
-        prettyVarDump($request->getUrlPath());
-
         [$controllerClass, $method, $params] = $this->router->match($request->getUrlPath());
 
         if (null === $controllerClass || null === $method) {

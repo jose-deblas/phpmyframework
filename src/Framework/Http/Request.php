@@ -24,6 +24,38 @@ class Request {
         $this->initialize($query, $request, $attributes, $cookies, $files, $server, $content);
     }
 
+    public function getQuery(): ParameterBag {
+        return $this->query;
+    }
+
+    public function getRequest(): ParameterBag {
+        return $this->request;
+    }
+
+    public function getAttributes(): ParameterBag {
+        return $this->attributes;
+    }
+
+    public function getCookies(): ParameterBag {
+        return $this->cookies;
+    }
+
+    public function getFiles(): ParameterBag {
+        return $this->files;
+    }
+
+    public function getServer(): ServerBag {
+        return $this->server;
+    }
+
+    public function getHeaders(): HeaderBag {
+        return $this->headers;
+    }
+
+    public function getContent(): mixed {
+        return $this->content;
+    }
+
     public function initialize(
         array $query = [],
         array $request = [],

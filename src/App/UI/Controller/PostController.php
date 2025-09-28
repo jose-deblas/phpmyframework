@@ -5,14 +5,31 @@ namespace App\UI\Controller;
 use Framework\Http\Request;
 use Framework\Http\Response;
 
+use App\Application\Service\GetSinglePostService;
+use App\Infrastructure\Persistence\PostRepository;
+use App\Domain\Model\Post;
+
+
 class PostController extends BaseController
 {
     public function execute(Request $request): Response
     {
-        prettyVarDump($request);
-        $body = '<html><body><h1>PostController Page</h1></body></html>';
+        // Dependency Injection would tipically be handled by a container
+        $getSinglePostService = new GetSinglePostService(new PostRepository());
+        $parameters = $request->getQuery();
+        $post = $getSinglePostService->execute($parameters->get('id', 0));
+
+
+        if ($post === null) {
+            $content = $this->render('not-found', ['message' => 'Post not found']);
+            $statusCode = 404;
+
+            return new Response($content, $statusCode);
+        }
+        
+        $content = $this->render('post', ['post' => $post->toArray()]);
         $statusCode = 200;
 
-        return new Response($body, $statusCode);
+        return new Response($content, $statusCode);
     }
 }
