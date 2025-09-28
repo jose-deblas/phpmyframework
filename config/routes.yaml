@@ -3,7 +3,12 @@ app_index:
     controller: App\UI\Controller\IndexController
     method: execute
 
-app_show:
-    path:     /show/{id}
+app_post:
+    path:     /post/{id}
+    controller: App\UI\Controller\PostController
+    method: execute
+
+app_post_category:
+    path:     /post/{id}/category/{category}
     controller: App\UI\Controller\PostController
     method: execute
