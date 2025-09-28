@@ -56,10 +56,3 @@ class RouterTest extends TestCase
         $this->assertNull($params);
     }
 }
-
-function prettyVarDump($var)
-{
-    echo '<pre style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ccc;">';
-    var_dump($var);
-    echo '</pre>';
-}

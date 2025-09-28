@@ -15,10 +15,10 @@ class PostRepository implements PostRepositoryInterface
         return $this->loadPosts();
     }
 
-    public function findById(PostId $id): ?Post
+    public function findById(PostId $postId): ?Post
     {
         $posts = $this->loadPosts();
-        return $posts[$id->getId()] ?? null;
+        return $posts[$postId->getId()] ?? null;
     }
 
     private function loadPosts(): array
