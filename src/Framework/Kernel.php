@@ -5,9 +5,11 @@ namespace Framework;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Framework\Routing\Router;
+use Framework\Routing\RouterConfigLoader;
 
 class Kernel
 {
+    private const YAML_CONFIG_PATH = __DIR__ . '/../../config/routes.yaml';
     private string $environment;
     private bool $debug;
     private bool $booted = false;
@@ -33,10 +35,16 @@ class Kernel
     {
         $this->boot();
 
-        [$controllerClass, $method] = $this->router->match($request->getUrlPath());
-        
+        prettyVarDump($request->getUrlPath());
+
+        [$controllerClass, $method, $params] = $this->router->match($request->getUrlPath());
+
         if (null === $controllerClass || null === $method) {
             return $this->notFoundResponse();
+        }
+
+        if (null !== $params) {
+            $request->addParamsInQuery($params);
         }
 
         $controller = new $controllerClass();
@@ -57,12 +65,14 @@ class Kernel
 
     private function initializeRoutes(): void
     {
-        $this->router = Router::fromYamlConfig();
+        $this->router = Router::loadCollection(
+            RouterConfigLoader::loadYaml(self::YAML_CONFIG_PATH)
+        );
     }
 
     private function notFoundResponse(): Response
     {
-        $body = '<html><body><h1>404 Not Found</h1></body></html>';
+        $body = '<html><body><h1>404 Not Foundddd</h1></body></html>';
         return new Response($body, 404);
     }
 }

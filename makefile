@@ -32,4 +32,4 @@ shell:
 #	docker-compose run --rm web sh
 
 test:
-	docker-compose exec $(APP_NAME) vendor/bin/phpunit tests/* --colors=always --testdox
+	docker-compose exec $(APP_NAME) vendor/bin/phpunit tests --colors=always --testdox

@@ -100,4 +100,10 @@ class Request {
         }
         return $normalized;
     }
+
+    public function addParamsInQuery(array $attributes): void {
+        foreach ($attributes as $key => $value) {
+            $this->query->set($key, $value);
+        }
+    }
 }
