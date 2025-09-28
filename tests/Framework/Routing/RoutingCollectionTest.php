@@ -2,8 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 
-use Framework\Routing\Router;
-use Framework\Routing\RouterConfigLoader;
 use Framework\Routing\RoutingCollection;
 
 class RoutingCollectionTest extends TestCase
