@@ -1,4 +1,4 @@
-# MyFramework
+# PHPMyFramework
 
 A simple PHP request/response framework
 
