@@ -12,13 +12,17 @@ use App\Domain\Model\Post;
 
 class PostController extends BaseController
 {
+    private GetSinglePostService $getSinglePostService;
+    
+    public function __construct(GetSinglePostService $getSinglePostService)
+    {
+        $this->getSinglePostService = $getSinglePostService;
+    }
+
     public function execute(Request $request): Response
     {
-        // Dependency Injection would tipically be handled by a container
-        $getSinglePostService = new GetSinglePostService(new PostRepository());
         $parameters = $request->getQuery();
-        $post = $getSinglePostService->execute($parameters->get('id', 0));
-
+        $post = $this->getSinglePostService->execute($parameters->get('id', 0));
 
         if ($post === null) {
             $content = $this->render('not-found', ['message' => 'Post not found']);

@@ -5,15 +5,19 @@ namespace App\UI\Controller;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use App\Application\Service\GetPostsService;
-use App\Infrastructure\Persistence\PostRepository;
 
 class IndexController extends BaseController
 {
+    private GetPostsService $getPostsService;
+
+    public function __construct(GetPostsService $getPostsService)
+    {
+        $this->getPostsService = $getPostsService;
+    }
+
     public function execute(Request $request): Response
     {
-        // Dependency Injection would tipically be handled by a container
-        $getPostsService = new GetPostsService(new PostRepository());
-        $posts = $getPostsService->execute();
+        $posts = $this->getPostsService->execute();
         
         $postsArray = array_map(fn($post) => $post->toArray(), $posts);
 

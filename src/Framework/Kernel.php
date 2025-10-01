@@ -2,6 +2,7 @@
 
 namespace Framework;
 
+use Framework\Container\Container;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Framework\Routing\Router;
@@ -10,10 +11,12 @@ use Framework\Routing\RouterConfigLoader;
 class Kernel
 {
     private const YAML_CONFIG_PATH = __DIR__ . '/../../config/routes.yaml';
+    private const PHP_CONFIG_PROVIDERS_PATH = __DIR__ . '/../../config/providers.php';
     private string $environment;
     private bool $debug;
     private bool $booted = false;
     private Router $router;
+    private Container $container;
 
     public function __construct(string $environment = 'dev', bool $debug = true)
     {
@@ -45,9 +48,9 @@ class Kernel
             $request->addParamsInQuery($params);
         }
 
-        $controller = new $controllerClass();
+        $controller = $this->container->get($controllerClass);
 
-        return $controller->$method($request);        
+        return $controller->$method($request);
     }
 
     private function boot(): void
@@ -56,11 +59,23 @@ class Kernel
             return;
         }
 
+        $this->initializeContainer();
+
         $this->initializeRoutes();
         
         $this->booted = true;
     }
 
+    private function initializeContainer(): void
+    {
+        $this->container = new Container();
+        $providers = require self::PHP_CONFIG_PROVIDERS_PATH;
+        foreach ($providers as $providerClassPath) {
+            $provider = new $providerClassPath();
+            $provider->register($this->container);
+        }
+    }
+    
     private function initializeRoutes(): void
     {
         $this->router = Router::loadCollection(
