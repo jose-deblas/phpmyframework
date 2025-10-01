@@ -36,7 +36,7 @@ return [
 ];
 ```
 
-Each container should implement the interface \Framework\Container\ServiceProviderInterface where is mandatory the function register
+Each provider has to implement the interface \Framework\Container\ServiceProviderInterface where the function register is mandatory
 
 ```php
 class RepositoriesProvider implements ServiceProviderInterface
