@@ -1,6 +1,6 @@
-# MyFramework
+# PHPMyFramework
 
-A simple PHP request/response framework
+PHPMyFramework is a simple PHP request/response framework
 
 ## Install
 
