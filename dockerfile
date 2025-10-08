@@ -26,8 +26,8 @@ WORKDIR /var/www/html
 # Configure git to treat this directory as safe
 RUN git config --global --add safe.directory /var/www/html
 
-# Copy only composer files to leverage Docker cache
-COPY composer.json composer.lock ./
+# Copy only composer files to leverage Docker cache (.lock cannot be added because it may not exist yet)
+COPY composer.json ./
 
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader
